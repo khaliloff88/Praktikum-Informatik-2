@@ -1,0 +1,70 @@
+/*
+ * PKW.cpp
+ *
+ *  Created on: Oct 27, 2024
+ *      Author: khxli
+ */
+
+#include "PKW.h"
+#include <string>
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+
+
+
+
+
+PKW::PKW() {
+	// TODO Auto-generated constructor stub
+
+}
+
+PKW::PKW(std::string s,double g,double v, double tv):Fahrzeug(s,g), p_dVerbrauch(v), p_dTankvolumen(tv), p_dTankinhalt(tv/2) {
+	std::cout<<"Verbrauch: "<<p_dVerbrauch<<"\n";
+
+}
+
+
+PKW::~PKW() {
+	// TODO Auto-generated destructor stub
+}
+
+double PKW::dTanken(double dMenge) {
+	if (dMenge>(p_dTankvolumen-p_dTankinhalt)){
+		dMenge=(p_dTankvolumen-p_dTankinhalt);
+	}
+	p_dTankinhalt+=dMenge;
+	return dMenge;
+}
+
+void PKW::vSimulieren(){
+	double extern dGlobaleZeit;
+	double extern dEpsilon;
+	if(fabs(dGlobaleZeit-p_dZeit)>dEpsilon){
+		if (p_dTankinhalt==0.00){	//if p_dTankinhalt!=0 wird mit der Reserve garantiert dass die Fahrzeug den nachsten Schritt mmachen kann.
+			p_dZeit=dGlobaleZeit;
+			return;
+			}
+		else{
+			p_dTankinhalt-=(((dGlobaleZeit-p_dZeit)*p_dMaxGeschwindigkeit) * p_dVerbrauch)/100; //wird der Verbrauch des nachsten Schritt berechnet und subtrahiert
+			if(p_dTankinhalt<=dEpsilon)
+				p_dTankinhalt=0.00;
+			Fahrzeug::vSimulieren();
+		}
+	}
+}
+
+
+
+void PKW::vAusgeben(std::ostream& ausgabe) const{
+	Fahrzeug::vAusgeben(ausgabe);
+	ausgabe<< std::fixed << std::setprecision(2);
+	ausgabe <<  std::setiosflags(std::ios::right);
+	ausgabe<<std::setw(15)<<(p_dGesamtStrecke*p_dVerbrauch)/100
+			<<std::setw(15)<<p_dTankinhalt;
+	 ausgabe<< std::resetiosflags(std::ios::right);
+
+}
+
+

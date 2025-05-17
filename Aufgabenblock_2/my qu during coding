@@ -1,0 +1,53 @@
+
+
+
+what is forward declaration and why we use it?
+
+
+
+
+Was passiert mit der alten Instanz,
+wenn das Fahrzeug auf einen neuen Weg gesetzt wird?
+
+wird zerstört i think.
+
+
+p_Abschnitt
+plan A:
+define a new variable in verhalten where i can save the gesamt strecke on that way and give it to p_abschnitt. but here i don't see any definition of set function of pabschnit in fahrzeug
+
+plan B:
+try to use vSimulieren in dstrecke.
+this makes more since because  the vsimulieren will do the set of values for us.
+
+
+
+how to call dgeschwindigkeit withou an instanz in vsimulieren?
+
+
+we didn't use limitations of weg yet .
+
+
+
+void Weg::vAnnahme(std::unique_ptr<Fahrzeug> fz){
+	fz->vNeueStrecke(*this);
+	l.push_back(std::move(fz));
+} in the first time i switched the order of these two lines. what happens is that fz is moved so fz is set to nullptr. this way i can't access to vNeueStrecke. 
+what chatgpt said to this :Any attempt to dereference it afterward, such as calling fz->vNeueStrecke(*this);, results in undefined behavior because you're trying to access a null pointer.
+
+
+
+
+#pragma and guards
+
+const  Fahrzeug& p_pFahrzeug;
+	const  Weg& p_pWeg; don't forget them and verhalten also
+	
+	
+	badalt move fi losfahren vbearbeiten
+	
+	
+	
+there is a missing step generally speaking if the car moves through a kreuzung z.b: for 2 hours simulation the cars moved 90 km with aktuellegesch =50!
+
+
