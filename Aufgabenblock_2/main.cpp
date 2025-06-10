@@ -392,7 +392,7 @@ void vAufgabe_7 (){
 
 
 int main(){
-	vAufgabe_6a();
+	vAufgabe_7();
 	cout<<"tout va bien";
 
 	return 0;
